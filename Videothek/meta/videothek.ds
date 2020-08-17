@@ -1,0 +1,738 @@
+/*
+ * Author       : boostvolt
+ * Version      : 1.0
+ */
+ application "Videothek"
+ {
+ 	date format = "yyyy-MM-dd"
+ 	time zone = "Europe/Zurich"
+ 	time format = "24-hr"
+	section Kunden
+	{
+		icon = "users-multiple-11"
+		list Kunden
+		{
+			displayName = "Kunden"
+			show all rows from kunde_hinzufuegen    
+			(
+				KunNummer as "Kundennummer"
+				KunAnredede as "Anrede"
+				KunVorname as "Vorname"
+				KunNachname as "Nachname"
+				KunStrasse as "Strasse"
+				KunPLZ as "PLZ"
+				KunOrt as "Ort"
+				KunGebDatum as "Geburtstag"
+				KunEMail as "E-Mail"
+				KunTelefon as "Telefonnummer"
+			)
+			options
+			(
+				icon = "design-bullet-list-67"
+	 		)
+			quickview
+			(
+				layout
+				(
+		 			type = -1
+					datablock1
+					(
+			 			layout type = -1
+		     			title = "Overview"
+						fields
+						(
+							KunNummer as "Kundennummer"
+							KunAnredede as "Anrede"
+							KunVorname as "Vorname"
+							KunNachname as "Nachname"
+							KunStrasse as "Strasse"
+							KunPLZ as "PLZ"
+							KunOrt as "Ort"
+							KunGebDatum as "Geburtstag"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Delete 
+    	 			)
+							record
+							(
+								Edit   	   
+								Delete   	   
+    						)
+    			)
+    			action
+    			(
+							on click
+							(
+								View Record   	   
+    						)
+							on right click
+							(
+								Edit   	   
+								Delete   	   
+								View Record   	   
+    						)
+     			)
+			)
+			detailview
+			(
+				layout
+				(
+		 			type = 2
+					datablock1
+					(
+			 			layout type = -2
+		     			title = "Informationen"
+						fields
+						(
+							KunNummer as "Kundennummer"
+							KunAnredede as "Anrede"
+							KunVorname as "Vorname"
+							KunNachname as "Nachname"
+							KunStrasse as "Strasse"
+							KunPLZ as "PLZ"
+							KunOrt as "Ort"
+							KunGebDatum as "Geburtstag"
+							KunEMail as "E-Mail"
+							KunTelefon as "Telefonnummer"
+						)
+					)
+					datablock2
+					(
+			 			layout type = -1
+		     			title = "Ausleihen"
+		     			related field =  ausleihe_hinzufuegen.KunNummer
+						fields
+						(
+							VidNummer as "Video Nummer"
+							KunNummer as "Kunden Nummer"
+							AusVon as "Von Datum"
+							AusBis as "Bis Datum"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Delete 
+    	 			)
+    			)
+			)
+		}
+		form kunde_hinzufuegen
+		{
+			displayname = "Kunde hinzufügen"
+			success message = "Die Daten wurden erfolgreich hinzugefügt!"
+			field alignment = left
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			must have unique KunNummer
+			(
+				type = number
+				displayname = "Kundennummer"
+				maxchar = 4
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have KunAnredede
+			(
+				type = picklist
+				displayname = "Anrede"
+				values = {"Herr", "Frau", "*"}
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have KunVorname
+			(
+    			type = text
+				displayname = "Vorname"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have KunNachname
+			(
+    			type = text
+				displayname = "Nachname"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have KunStrasse
+			(
+    			type = text
+				displayname = "Strasse"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have KunPLZ
+			(
+				type = number
+				displayname = "PLZ"
+				maxchar = 4
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have KunOrt
+			(
+    			type = text
+				displayname = "Ort"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have KunGebDatum
+			(
+    			type = date
+				displayname = "Geburtstag"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have KunEMail
+			(
+    			type = email
+				displayname = "E-Mail"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have KunTelefon
+			(
+    			type = phonenumber
+				displayname = "Telefonnummer"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			customize
+			(
+				icon = "ui-1-bold-add"
+			)
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Absenden"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Rücksetzen"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Aktualisieren"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Abbrechen"
+					)
+				}
+			}
+		}
+	}
+	section Videos
+	{
+		icon = "media-1-play-69"
+		list Videos
+		{
+			displayName = "Videos"
+			show all rows from video_hinzufuegen    
+			(
+				VidNummer as "Video Nummer"
+				VidTitel as "Titel"
+				JahrJahr as "Jahr"
+				VidDauer as "Dauer"
+				KategorieKategorie as "Kategorie"
+				VidBewertung as "Bewertung"
+				VidFreiAb as "Freigabe"
+				VidPreisProTag as "Videopreis pro Tag"
+				VidEinkaufsPreis as "Video Einkaufspreis"
+				VidLagerBestand as "Video Lagerbestand"
+				VidBeschreibung as "Videobeschreibung"
+			)
+			options
+			(
+				icon = "design-bullet-list-67"
+	 		)
+			quickview
+			(
+				layout
+				(
+		 			type = -1
+					datablock1
+					(
+			 			layout type = -1
+		     			title = "Overview"
+						fields
+						(
+							VidNummer as "Video Nummer"
+							VidTitel as "Titel"
+							JahrJahr as "Jahr"
+							VidDauer as "Dauer"
+							KategorieKategorie as "Kategorie"
+							VidBewertung as "Bewertung"
+							VidFreiAb as "Freigabe"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Delete 
+    	 			)
+							record
+							(
+								Edit   	   
+								Delete   	   
+    						)
+    			)
+    			action
+    			(
+							on click
+							(
+								View Record   	   
+    						)
+							on right click
+							(
+								Edit   	   
+								Delete   	   
+								View Record   	   
+    						)
+     			)
+			)
+			detailview
+			(
+				layout
+				(
+		 			type = 1
+					datablock1
+					(
+			 			layout type = -2
+		     			title = "Overview"
+						fields
+						(
+							VidNummer as "Video Nummer"
+							VidTitel as "Titel"
+							JahrJahr as "Jahr"
+							VidDauer as "Dauer"
+							KategorieKategorie as "Kategorie"
+							VidBewertung as "Bewertung"
+							VidFreiAb as "Freigabe"
+							VidPreisProTag as "Videopreis pro Tag"
+							VidEinkaufsPreis as "Video Einkaufspreis"
+							VidLagerBestand as "Video Lagerbestand"
+							VidBeschreibung as "Videobeschreibung"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit 
+    		 			Delete 
+    	 			)
+    			)
+			)
+		}
+		form video_hinzufuegen
+		{
+			displayname = "Video hinzufügen"
+			success message = "Die Daten wurden erfolgreich hinzugefügt!"
+			field alignment = left
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			must have unique VidNummer
+			(
+				type = number
+				displayname = "Video Nummer"
+				maxchar = 6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have VidTitel
+			(
+    			type = text
+				displayname = "Titel"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have JahrJahr
+			(
+				type = number
+				displayname = "Jahr"
+				maxchar = 4
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have VidDauer
+			(
+				type = number
+				displayname = "Dauer"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have KategorieKategorie
+			(
+    			type = text
+				displayname = "Kategorie"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have VidBewertung
+			(
+				type = decimal
+				displayname = "Bewertung"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have VidFreiAb
+			(
+				type = number
+				displayname = "Freigabe"
+				maxchar = 2
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			VidPreisProTag
+			(
+				type = CHF
+				format = quotedot
+				displayname = "Videopreis pro Tag"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			VidEinkaufsPreis
+			(
+				type = CHF
+				format = quotedot
+				displayname = "Video Einkaufspreis"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			VidLagerBestand
+			(
+				type = number
+				displayname = "Video Lagerbestand"
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			VidBeschreibung
+			(
+    			type = textarea
+				displayname = "Videobeschreibung"
+				height = 100px
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			customize
+			(
+				icon = "ui-1-bold-add"
+			)
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Absenden"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Rücksetzen"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Aktualisieren"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Abbrechen"
+					)
+				}
+			}
+		}
+	}
+	section Ausleihen
+	{
+		icon = "business-handshake"
+		list Ausleihen
+		{
+			displayName = "Ausleihen"
+			show all rows from ausleihe_hinzufuegen    
+			(
+				VidNummer as "Video Nummer"
+				(
+					view = Videos
+				)
+				KunNummer as "Kunden Nummer"
+				(
+					view = Kunden
+				)
+				AusVon as "Von Datum"
+				AusBis as "Bis Datum"
+			)
+			options
+			(
+				icon = "design-bullet-list-67"
+	 		)
+			quickview
+			(
+				layout
+				(
+		 			type = -1
+					datablock1
+					(
+			 			layout type = -1
+		     			title = "Overview"
+						fields
+						(
+							VidNummer as "Video Nummer"
+							KunNummer as "Kunden Nummer"
+							AusVon as "Von Datum"
+							AusBis as "Bis Datum"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit  as "Bearbeiten" 
+    		 			Delete  as "Löschen" 
+    	 			)
+							record
+							(
+								Edit  as "Bearbeiten"   	   
+								Delete  as "Löschen"   	   
+    						)
+    			)
+    			action
+    			(
+							on click
+							(
+								View Record   	   
+    						)
+							on right click
+							(
+								Edit  as "Bearbeiten"   	   
+								Delete  as "Löschen"   	   
+								View Record  as "Ansehen"   	   
+    						)
+     			)
+			)
+			detailview
+			(
+				layout
+				(
+		 			type = 1
+					datablock1
+					(
+			 			layout type = -2
+		     			title = "Overview"
+						fields
+						(
+							VidNummer as "Video Nummer"
+							KunNummer as "Kunden Nummer"
+							AusVon as "Von Datum"
+							AusBis as "Bis Datum"
+						)
+					)
+				)
+
+				menu
+    			(
+    	 			header
+    	 			(
+    		 			Edit  as "Bearbeiten" 
+    		 			Delete  as "Löschen" 
+    	 			)
+    			)
+			)
+		}
+		form ausleihe_hinzufuegen
+		{
+			displayname = "Ausleihe hinzufügen"
+			success message = "Die Daten wurden erfolgreich hinzugefügt!"
+			field alignment = left
+			Section
+			(
+				type = section
+	 			row = 1
+	 			column = 0   
+				width = medium
+			)
+			must have VidNummer
+			(
+				type = picklist
+				displayname = "Video Nummer"
+				values  = video_hinzufuegen.ID
+    			displayformat = [VidNummer]
+				sortorder = ascending
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have KunNummer
+			(
+				type = picklist
+				displayname = "Kunden Nummer"
+				values  = kunde_hinzufuegen.ID
+    			displayformat = [KunNummer]
+				sortorder = ascending
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have AusVon
+			(
+    			type = datetime
+				displayname = "Von Datum"
+				timedisplayoptions = "hh:mm:ss"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+			must have AusBis
+			(
+    			type = datetime
+				displayname = "Bis Datum"
+				timedisplayoptions = "hh:mm:ss"
+				alloweddays = 0,1,2,3,4,5,6
+	 			row = 1
+	 			column = 1   
+				width = medium
+			)
+	
+			customize
+			(
+				icon = "ui-1-bold-add"
+			)
+			actions
+			{
+				on add
+				{
+					submit
+					(
+   						type = submit
+   						displayname = "Absenden"
+					)
+					reset
+					(
+   						type = reset
+   						displayname = "Rücksetzen"
+					)
+				}
+				on edit
+				{
+					update
+					(
+   						type = submit
+   						displayname = "Aktualisieren"
+					)
+					cancel
+					(
+   						type = cancel
+   						displayname = "Abbrechen"
+					)
+				}
+			}
+		}
+	}
+
+
+
+	workflow
+	{
+		form
+		{
+			Film_zu_Kunden_hinzuf_gen as "Film zu Kunden hinzufügen"
+			{
+				type =  form
+					form = ausleihe_hinzufuegen
+				on add
+				{
+				}
+			}
+		}
+	}
+	customize
+	{
+		
+		layout = "tab"
+		color = "black"
+		base theme = "professional"
+		new theme = 8
+		new theme color = 10
+		icons = true
+    	icon type = 3
+    	icon name = "VID"
+    	icon theme = "darkgrey"
+		icons style = outline
+	}
+
+	translation
+{
+"{\"Language_Settings\" : {\"LANGAGUE_WITH_LOGIN\":\"browser\"},\"de\":{\"Section.Videos\":\"\",\"Section.Ausleihen\":\"\",\"App.videothek\":\"\",\"Section.Kunden\":\"\"}}"
+}
+}

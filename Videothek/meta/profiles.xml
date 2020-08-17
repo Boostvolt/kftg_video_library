@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<profiles>
+    <version>1</version>
+    <profile name="Administrator">
+        <description>This profile will have all the permissions.</description>
+        <profile-type>1</profile-type>
+        <profile-level-permissions>CHAT</profile-level-permissions>
+        <profile-status>Active</profile-status>
+    </profile>
+    <profile name="Read">
+        <description>This profile will have read permission for all components</description>
+        <profile-type>1</profile-type>
+        <profile-level-permissions>CHAT</profile-level-permissions>
+        <profile-status>Active</profile-status>
+    </profile>
+    <profile name="Write">
+        <description>This profile will have write permission for all components</description>
+        <profile-type>1</profile-type>
+        <profile-level-permissions>CHAT</profile-level-permissions>
+        <profile-status>Active</profile-status>
+    </profile>
+    <profile name="Developer">
+        <description>Developer Profile</description>
+        <profile-type>3</profile-type>
+        <profile-level-permissions/>
+        <profile-status>Active</profile-status>
+    </profile>
+    <profile name="Customer">
+        <description>This is the default profile having only add and view permission.</description>
+        <profile-type>2</profile-type>
+        <profile-level-permissions/>
+        <profile-status>Active</profile-status>
+    </profile>
+</profiles>
