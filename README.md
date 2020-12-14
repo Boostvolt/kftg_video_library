@@ -16,3 +16,7 @@ Diese Ressource wurde zu Demonstrationszwecken erstellt. Diese kann in Zukunft i
 - Kundenkarte ausdrucken
 - Rechte vergeben
 - Datenbank verwalten
+
+## License
+
+Copyright © 2020 Boostvolt. All rights reserved.
